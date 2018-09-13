@@ -1,0 +1,70 @@
+/*
+
+Theme Name:     Twenty Eleven Child
+Theme URI:      http://www.mgimageryphotography.com/
+Description:    Child theme for the Twenty Eleven theme
+Author:         Ray Villaraza
+Author URI:     http: //www.rayvillaraza.com
+Template:       twentyeleven
+Version:        0.1.0
+
+*/
+
+@import url("../twentyeleven/style.css");
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700|Arvo:700);
+
+body {
+	font-family:Open Sans !important;
+	background:url('http://www.mgimageryphotography.com/wp-content/uploads/2012/03/background.jpg') center center no-repeat fixed !important;
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover !important;
+	-o-background-size: cover !important;
+	background-size: cover !important;
+	color:#fff !important;
+}
+
+#page {
+	background:url('http://www.mgimageryphotography.com/wp-content/uploads/2012/03/trans-black.png') !important;
+}
+
+#branding {
+	border:none !important;
+}
+
+#branding #searchform {
+	right:0.6%;
+}
+
+#branding .only-search #searchform {
+	top:583px;
+}
+
+.entry-title {
+	padding:0;
+	font-family:Arvo;
+	font-weight:bold;
+	font-size:28px !important;
+	color:#fff !important;
+	line-height:1.25em;
+}
+
+.entry-content, .entry-summary {
+	padding:20px 0;
+}
+
+#access li:hover > a,
+#access a:focus {
+	background: #109ff4; /* Show a solid color for older browsers */
+	background: -moz-linear-gradient(#109ff4, #068edf);
+	background: -o-linear-gradient(#109ff4, #068edf);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#109ff4), to(#068edf)); /* Older webkit syntax */
+	background: -webkit-linear-gradient(#109ff4, #068edf);
+	color: #fff;
+}
+#gallery-1 .gallery-item, #gallery-2 .gallery-item {
+	margin:0;
+}
+img[class*="align"], img[class*="wp-image-"], #content .gallery .gallery-icon img {
+	padding:0;
+	margin:5px;
+}
