@@ -1,18 +1,19 @@
 <?php
 /*
 Plugin Name: AntiVirus
+Description: Security plugin to protect your blog or website against exploits and spam injections.
+Author:      pluginkollektiv
+Author URI:  http://pluginkollektiv.org
+Plugin URI:  https://wordpress.org/plugins/antivirus/
 Text Domain: antivirus
 Domain Path: /lang
-Description: Security solution as a smart, effectively plugin to protect your blog against exploits and spam injections.
-Author: Sergej M&uuml;ller
-Author URI: http://wpcoder.de
-Plugin URI: http://wpantivirus.com
-License: GPLv2 or later
-Version: 1.3.8
+License:     GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Version:     1.3.9
 */
 
 /*
-Copyright (C)  2009-2014 Sergej Müller
+Copyright (C)  2009-2015 Sergej Müller
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -225,8 +226,7 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://flattr.com/t/1322865" target="_blank">Flattr</a>',
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=ZAQUT9RLPW8QN" target="_blank">PayPal</a>'
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>'
 			)
 		);
 	}
@@ -429,9 +429,6 @@ class AntiVirus {
 				'https://sb-ssl.google.com/safebrowsing/api/lookup?client=wpantivirus&key=%s&appver=1.3.7&pver=3.1&url=%s',
 				'AIzaSyALNYwuy-Pidn7vx3-In-hU0zgMH5Wr42U',
 				urlencode( get_bloginfo('url') )
-			),
-			array(
-				'sslverify' => false
 			)
 		);
 
@@ -441,7 +438,7 @@ class AntiVirus {
 		}
 
 		/* All clear */
-		if ( wp_remote_retrieve_response_code($response) == 204 ) {
+		if ( wp_remote_retrieve_response_code($response) === 204 ) {
 			return;
 		}
 
@@ -595,10 +592,10 @@ class AntiVirus {
 			'av_settings',
 			array(
 				'nonce' => wp_create_nonce('av_ajax_nonce'),
-				'theme'	=> urlencode(self::_get_theme_name()),
-				'msg_1'	=> esc_html__('There is no virus', 'antivirus'),
-				'msg_2' => esc_html__('View line', 'antivirus'),
-				'msg_3' => esc_html__('Scan finished', 'antivirus')
+				'theme'	=> esc_js(urlencode(self::_get_theme_name())),
+				'msg_1'	=> esc_js(__('There is no virus', 'antivirus')),
+				'msg_2' => esc_js(__('View line', 'antivirus')),
+				'msg_3' => esc_js(__('Scan finished', 'antivirus'))
 			)
 		);
 	}
@@ -810,19 +807,11 @@ class AntiVirus {
 
 		/* Ausgabe starten */
 		if ( $values ) {
-			$output = sprintf(
-				"['%s']",
-				implode("', '", $values)
-			);
-
-			/* Header senden */
-			header('Content-Type: plain/text');
-
-			/* Ausgeben */
-			echo sprintf(
-				'{data:%s, nonce:"%s"}',
-				$output,
-				$_POST['_ajax_nonce']
+			wp_send_json(
+				array(
+					'data'  => array_values($values),
+					'nonce' => $_POST['_ajax_nonce']
+				)
 			);
 		}
 
@@ -1298,7 +1287,7 @@ class AntiVirus {
 							<input type="submit" class="button button-primary" value="<?php _e('Save Changes') ?>" />
 						</th>
 						<td>
-							<?php if ( get_locale() == 'de_DE' ) { ?><a href="http://playground.ebiene.de/antivirus-wordpress-plugin/" target="_blank">Handbuch</a> &bull; <?php } ?><a href="https://flattr.com/t/1322865" target="_blank">Flattr</a> &bull; <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=ZAQUT9RLPW8QN" target="_blank">PayPal</a>
+							<?php if ( substr( get_locale(), 0, 3 ) === 'de_' ) { ?><a href="https://github.com/pluginkollektiv/antivirus/wiki" target="_blank">Handbuch</a> &bull; <?php } ?><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>
 						</td>
 					</tr>
 				</table>
